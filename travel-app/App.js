@@ -1,37 +1,48 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { View, Text, Button } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-function HomeScreen({ navigation }) {
+const HomeStack = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
+    <Stack.Navigator
+      initialRoute
+      Name="HomeScreen"
+      screenOptions={{
+        headerStyle: { backgroundColor: "#959BF6" },
+        headerTintColor: "white",
+      }}
+    >
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
       />
-    </View>
+    </Stack.Navigator>
   );
-}
+};
 
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
-export default function App() {
+export const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
+      <HomeStack />
     </NavigationContainer>
   );
-}
+};
+
+export default App;
+
+/*export const App = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeStack} />
+        <Tab.Screen name="Search" component={SearchStack} />
+        <Tab.Screen name="Profile" component={ProfileStack} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};*/
