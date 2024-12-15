@@ -5,19 +5,13 @@ const HomeScreen = () =>
 {
     return (
         <Screen>
-            <Text>Home Screen !!!</Text>
-            <Text>Home Screen !!!</Text>
-            <Text>Home Screen !!!</Text>
-            <Text>Home Screen !!!</Text>
-            <Text>whats good hamodi</Text>
-            <Text>SIGMA SIGMA BOY</Text>
-            <Text style={styles.text}>Ali Herro</Text>
+            <Text style={styles.text}>Home Screen </Text>
         </Screen>
       );
 };
 
 const styles = StyleSheet.create({
-  text: { padding: 150, color: "purple" },
+  text: { alignContent: "center", padding: 50, fontSize: 40, color: "purple" }
 });
 
 export default HomeScreen;
