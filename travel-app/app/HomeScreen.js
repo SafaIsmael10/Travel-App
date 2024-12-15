@@ -1,5 +1,5 @@
 import Screen from "./Screen.js";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 const HomeScreen = () =>
 {
@@ -11,8 +11,13 @@ const HomeScreen = () =>
             <Text>Home Screen !!!</Text>
             <Text>whats good hamodi</Text>
             <Text>SIGMA SIGMA BOY</Text>
+            <Text style={styles.text}>Ali Herro</Text>
         </Screen>
       );
 };
+
+const styles = StyleSheet.create({
+  text: { padding: 150, color: "purple" },
+});
 
 export default HomeScreen;
