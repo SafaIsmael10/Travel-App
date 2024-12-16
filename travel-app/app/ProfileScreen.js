@@ -1,5 +1,5 @@
 import Screen from "./Screen.js";
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, FlatList } from "react-native";
 
 const ProfileScreen = () =>
 {
@@ -12,9 +12,21 @@ const ProfileScreen = () =>
         following: 300,
         posts: 12,
     };
+
+    // Function to handle toolbar button press (update as per your logic)
+    const handleToolbarPress = (section) => {
+        console.log(section);
+    };
+
+    // Render each post item
+    const renderPost = ({ item }) => (
+        <View style={styles.post}>
+            <Image source={{ uri: user.profilePicture }} style={styles.postImage} />
+        </View>
+    );
+
     return (
         <Screen>
-            <View style={styles.container}>
                 <View style={styles.topContainer}>
                     <Image source={{ uri: user.profilePicture }} style={styles.profilePicture} />
                     <View style={styles.statsContainer}>
@@ -36,9 +48,8 @@ const ProfileScreen = () =>
                         </View>
                     </View>
                 </View>
-            </View>
             {/* Toolbar */}
-            <View style={styles.toolbar}>
+                <View style={styles.toolbar}>
                     <TouchableOpacity style={styles.toolbarButton} onPress={() => handleToolbarPress('Map')}>
                         <Text style={styles.toolbarText}>Map</Text>
                     </TouchableOpacity>
@@ -49,24 +60,25 @@ const ProfileScreen = () =>
                         <Text style={styles.toolbarText}>Settings</Text>
                     </TouchableOpacity>
                 </View>
-                {/* Bottom Section for Posts */}
-                <ScrollView contentContainerStyle={styles.postsContainer}>
-                    <Text style={styles.sectionTitle}>Recent Posts</Text>
-                    {/* Dummy Posts */}
-                    {[...Array(user.posts).keys()].map((index) => (
-                        <View key={index} style={styles.post}>
-                            <Image source={{ uri: user.profilePicture }} style={styles.postImage} />
-                            <Text style={styles.postText}>Post {index + 1}</Text>
-                        </View>
-                    ))}
-                </ScrollView>
+            {/* Posts */}
+            <View style={styles.container}>
+                <FlatList
+                    data={[...Array(user.posts).keys()]}  // Generating dummy posts
+                    renderItem={renderPost}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={3}  // 3 posts per row
+                    contentContainerStyle={styles.postsContainer}
+                    columnWrapperStyle={styles.columnWrapper}  // Ensure spacing between columns
+                />
+            </View>
         </Screen>
       );
 };
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: "#fff" },
-    topContainer: { flexDirection: "row", padding: 20, alignItems: "center" },
+    // Top Section (Takes More Space)
+    topContainer: { flex: 0.75, flexDirection: "row", padding: 20, alignItems: "center", backgroundColor: "#fff" },
     profilePicture: { width: 100, height: 100, borderRadius: 50, marginRight: 20 },
     statsContainer: { flex: 1 },
     username: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
@@ -75,17 +87,18 @@ const styles = StyleSheet.create({
     counter: { alignItems: "center" },
     counterNumber: { fontSize: 16, fontWeight: "bold" },
     counterLabel: { fontSize: 14, color: "gray" },
-    // Toolbar Styles
-    toolbar: { flexDirection: "row", justifyContent: "space-evenly", paddingVertical: 10, borderTopWidth: 1, borderColor: "#ccc" },
+
+    // Toolbar Section (Fixed Height)
+    toolbar: { height: 50, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "#f0f0f0" },
     toolbarButton: { paddingHorizontal: 20 },
     toolbarText: { fontSize: 16, fontWeight: "bold", color: "#333" },
 
-    // Bottom Posts Section
-    postsContainer: { paddingHorizontal: 20, paddingBottom: 40 },
-    sectionTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 10 },
-    post: { flexDirection: "row", alignItems: "center", marginBottom: 20 },
-    postImage: { width: 60, height: 60, borderRadius: 30, marginRight: 15 },
-    postText: { fontSize: 16, color: "#333" }
+    // Posts Section (Takes Remaining Space)
+    postsContainer: { flex: 1, paddingHorizontal: 10, paddingBottom: 40, backgroundColor: "#fff" },
+    columnWrapper: { justifyContent: "space-between" }, // Space between columns
+    sectionTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 20 },
+    post: { margin: 10 },
+    postImage: { width: 100, height: 100, borderRadius: 10 }
 });
 
 export default ProfileScreen;
