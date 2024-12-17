@@ -5,15 +5,13 @@ const SearchScreen = () =>
 {
     return (
         <Screen>
-            <Text>Search Screen: Search For Users</Text>
-            <Text>Search Screen: Search For Users</Text>
-            <Text>Search Screen: Search For Users</Text>
+            <Text style={styles.text}>Search Screen: Search For Users</Text>
         </Screen>
       );
 };
 
 const styles = StyleSheet.create({
-  text: { padding: 150, color: "blue" },
+  text: { alignContent: "center", padding: 50, fontSize: 40, color: "red" }
 });
 
 export default SearchScreen;
