@@ -1,4 +1,4 @@
-import Screen from "./Screen.js";
+import Screen from "../layout/Screen.js";
 import { View, Text, StyleSheet } from "react-native";
 
 const SearchScreen = () =>

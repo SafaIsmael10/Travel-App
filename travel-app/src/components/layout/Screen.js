@@ -15,7 +15,7 @@ const Screen = ({ children }) => {
 };
 
 const styles = StyleSheet.create({
-  screen: { padding: 15, flex: 1 }
+  screen: { padding: 0, flex: 1 }
 });
 
 export default Screen;

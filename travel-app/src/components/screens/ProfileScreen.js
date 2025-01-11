@@ -1,8 +1,13 @@
-import Screen from "./Screen.js";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import MapView, { Marker } from "react-native-maps";
+import Screen from "../layout/Screen.js";
 
-const ProfileScreen = () =>
-{
+const ProfileScreen = () => {
+    const navigation = useNavigation();
+    const [activeSection, setActiveSection] = useState("Posts");
+
     const user = 
     {
         profilePicture: "https://via.placeholder.com/150", // Replace with a real image URL
@@ -10,12 +15,20 @@ const ProfileScreen = () =>
         name: "John Doe",
         followers: 200,
         following: 300,
-        posts: 12,
+        posts: 17,
     };
 
     // Function to handle toolbar button press (update as per your logic)
     const handleToolbarPress = (section) => {
-        console.log(section);
+        setActiveSection(section);
+        /*if (section === "Settings") 
+        {
+            navigation.navigate("SettingsScreen");
+        } 
+        else 
+        {
+            console.log(`${section} pressed`);
+        }*/
     };
 
     // Render each post item
@@ -50,26 +63,44 @@ const ProfileScreen = () =>
                 </View>
             {/* Toolbar */}
                 <View style={styles.toolbar}>
-                    <TouchableOpacity style={styles.toolbarButton} onPress={() => handleToolbarPress('Map')}>
+                    <TouchableOpacity style={styles.toolbarButton} onPress={() => handleToolbarPress("Map")}>
                         <Text style={styles.toolbarText}>Map</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.toolbarButton} onPress={() => handleToolbarPress('Posts')}>
+                    <TouchableOpacity style={styles.toolbarButton} onPress={() => handleToolbarPress("Posts")}>
                         <Text style={styles.toolbarText}>Posts</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.toolbarButton} onPress={() => handleToolbarPress('Settings')}>
+                    <TouchableOpacity style={styles.toolbarButton} onPress={() => handleToolbarPress("Settings")}>
                         <Text style={styles.toolbarText}>Settings</Text>
                     </TouchableOpacity>
                 </View>
-            {/* Posts */}
+            {/* Bottom Section: Conditionally Render Posts or Map */}
             <View style={styles.container}>
-                <FlatList
-                    data={[...Array(user.posts).keys()]}  // Generating dummy posts
-                    renderItem={renderPost}
-                    keyExtractor={(item, index) => index.toString()}
-                    numColumns={3}  // 3 posts per row
-                    contentContainerStyle={styles.postsContainer}
-                    columnWrapperStyle={styles.columnWrapper}  // Ensure spacing between columns
-                />
+                {activeSection === "Posts" ? (
+                    <FlatList
+                        data={[...Array(user.posts).keys()]} // Generating dummy posts
+                        renderItem={renderPost}
+                        keyExtractor={(item, index) => index.toString()}
+                        numColumns={3} // 3 posts per row
+                        contentContainerStyle={styles.postsContainer}
+                        columnWrapperStyle={styles.columnWrapper} // Space between columns
+                        scrollEnabled={true}
+                    />
+                ) : activeSection === "Map" ? (
+                    <MapView
+                      style={styles.map}
+                      initialRegion={{
+                        latitude: 0,  // Start with a central point (latitude)
+                        longitude: 0, // Start with a central point (longitude)
+                        latitudeDelta: 180,  // Zoom out to see the whole world
+                        longitudeDelta: 360, // Zoom out to see the whole world
+                      }}
+                    >
+                      {/* You can add markers or other features here */}
+                      <Marker coordinate={{ latitude: 0, longitude: 0 }} title="World Center" />
+                    </MapView>
+                  ) : (
+                    <Text>Settings Section</Text>
+                  )}
             </View>
         </Screen>
       );
@@ -77,8 +108,8 @@ const ProfileScreen = () =>
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: "#fff" },
-    // Top Section (Takes More Space)
-    topContainer: { flex: 0.75, flexDirection: "row", padding: 20, alignItems: "center", backgroundColor: "#fff" },
+    // Top Section
+    topContainer: { flex: 0.5, flexDirection: "row", padding: 20, alignItems: "center", backgroundColor: "#fff" },
     profilePicture: { width: 100, height: 100, borderRadius: 50, marginRight: 20 },
     statsContainer: { flex: 1 },
     username: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
@@ -98,7 +129,11 @@ const styles = StyleSheet.create({
     columnWrapper: { justifyContent: "space-between" }, // Space between columns
     sectionTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 20 },
     post: { margin: 10 },
-    postImage: { width: 100, height: 100, borderRadius: 10 }
+    postImage: { width: 100, height: 100, borderRadius: 10 },
+
+    mapContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
+    mapText: { fontSize: 18, color: "gray" },
+    map: { flex: 1 }
 });
 
 export default ProfileScreen;

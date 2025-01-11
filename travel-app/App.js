@@ -2,9 +2,10 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./app/HomeScreen.js";
-import SearchScreen from "./app/SearchScreen.js";
-import ProfileScreen from "./app/ProfileScreen.js";
+import HomeScreen from "./src/components/screens/HomeScreen.js";
+import SearchScreen from "./src/components/screens/SearchScreen.js";
+import ProfileScreen from "./src/components/screens/ProfileScreen.js";
+import SettingsScreen from "./src/components/screens/SettingsScreen.js";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,11 +20,7 @@ const HomeStack = () => {
         headerTintColor: "white",
       }}
     >
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };
@@ -38,11 +35,7 @@ const SearchStack = () => {
         headerTintColor: "white",
       }}
     >
-      <Stack.Screen
-        name="SearchScreen"
-        component={SearchScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };
@@ -52,16 +45,9 @@ const ProfileStack = () => {
     <Stack.Navigator
       initialRoute
       name="ProfileScreen"
-      screenOptions={{
-        headerStyle: { backgroundColor: "#959BF6" },
-        headerTintColor: "white",
-      }}
     >
-      <Stack.Screen
-        name="ProfileScreen"
-        component={ProfileScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };
@@ -92,15 +78,3 @@ export const App = () => {
 };
 
 export default App;
-
-/*export const App = () => {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Search" component={SearchStack} />
-        <Tab.Screen name="Profile" component={ProfileStack} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-};*/
