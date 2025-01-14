@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./src/components/screens/HomeScreen.js";
 import SearchScreen from "./src/components/screens/SearchScreen.js";
+import ChatScreen from "./src/components/screens/ChatScreen.js";
 import ProfileScreen from "./src/components/screens/ProfileScreen.js";
 import SettingsScreen from "./src/components/screens/SettingsScreen.js";
 
@@ -40,6 +41,17 @@ const SearchStack = () => {
   );
 };
 
+const ChatStack = () => {
+  return (
+    <Stack.Navigator
+      initialRoute
+      name="ChatScreen"
+    >
+      <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: false }}/>
+    </Stack.Navigator>
+  );
+};
+
 const ProfileStack = () => {
   return (
     <Stack.Navigator
@@ -64,6 +76,7 @@ const MyTabs = () => {
     >
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Search" component={SearchStack} />
+      <Tab.Screen name="Chat" component={ChatStack} />
       <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );
