@@ -3,9 +3,9 @@ const mockPosts = [
         id: 1,
         user: "john_doe",
         profilePicture: "https://via.placeholder.com/150/FF0000/FFFFFF",
-        image: "https://via.placeholder.com/300",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
         likes: 120,
-        caption: "Exploring the mountains!",
+        caption: "Exploring the beach!",
         uploadDate: "2025-01-14T10:00:00Z",
     },
     {
